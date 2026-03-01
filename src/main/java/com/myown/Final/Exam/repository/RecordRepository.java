@@ -1,0 +1,9 @@
+package com.myown.Final.Exam.repository;
+
+import com.myown.Final.Exam.model.Record;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RecordRepository extends JpaRepository<Record, Long> {
+}
