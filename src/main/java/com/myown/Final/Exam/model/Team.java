@@ -2,32 +2,39 @@ package com.myown.Final.Exam.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "manager_full_name")
     private String managerFullName;
 
-    @Column(nullable = false)
-    private String group;
+    @Column(nullable = false,
+            name = "team_group")
+    private String teamGroup;
+
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    private List<Player> players = new ArrayList<>();
 
     protected Team(){
     }
 
-    public Team(String name, String managerFullName, String group) {
+    public Team(Long id, String name, String managerFullName, String teamGroup) {
+        this.id = id;
         this.name = name;
         this.managerFullName = managerFullName;
-        this.group = group;
+        this.teamGroup = teamGroup;
     }
 
-    public String getGroup() {
-        return group;
+    public String getTeamGroup() {
+        return teamGroup;
     }
 
     public String getManagerFullName() {
