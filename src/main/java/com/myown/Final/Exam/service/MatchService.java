@@ -1,11 +1,14 @@
 package com.myown.Final.Exam.service;
 
 import com.myown.Final.Exam.dto.MatchInputDto;
+import com.myown.Final.Exam.dto.MatchOutputDto;
 import com.myown.Final.Exam.model.Match;
 import com.myown.Final.Exam.model.Team;
 import com.myown.Final.Exam.repository.MatchRepository;
 import com.myown.Final.Exam.repository.TeamRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MatchService {
@@ -36,5 +39,12 @@ public class MatchService {
         Match match = dto.toEntity(home, away);
 
         matchRepository.save(match);
+    }
+
+    public List<MatchOutputDto> getAllMatches() {
+        return matchRepository.findAll()
+                .stream()
+                .map(MatchOutputDto::fromEntity)
+                .toList();
     }
 }
