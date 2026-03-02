@@ -7,6 +7,7 @@ import com.myown.Final.Exam.model.Team;
 import com.myown.Final.Exam.repository.MatchRepository;
 import com.myown.Final.Exam.repository.TeamRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class MatchService {
         matchRepository.save(match);
     }
 
+    @Transactional(readOnly = true)
     public List<MatchOutputDto> getAllMatches() {
         return matchRepository.findAll()
                 .stream()
