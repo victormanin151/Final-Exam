@@ -1,11 +1,15 @@
 package com.myown.Final.Exam.service;
 
 import com.myown.Final.Exam.dto.PlayerInputDto;
+import com.myown.Final.Exam.dto.PlayerOutputDto;
 import com.myown.Final.Exam.model.Player;
 import com.myown.Final.Exam.model.Team;
 import com.myown.Final.Exam.repository.PlayerRepository;
 import com.myown.Final.Exam.repository.TeamRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class PlayerService {
@@ -27,5 +31,13 @@ public class PlayerService {
         Player player = dto.toEntity(team);
 
         playerRepository.save(player);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlayerOutputDto> getAllPlayers() {
+        return playerRepository.findAll()
+                .stream()
+                .map(PlayerOutputDto::fromEntity)
+                .toList();
     }
 }
