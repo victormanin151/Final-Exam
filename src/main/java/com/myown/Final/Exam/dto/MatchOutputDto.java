@@ -7,7 +7,11 @@ public record MatchOutputDto(
         String homeTeamName,
         String awayTeamName,
         LocalDate date,
-        String score
+        int homeTeamScore,
+        int awayTeamScore,
+        boolean wentToPenalties,
+        Integer homePenaltyScore,
+        Integer awayPenaltyScore
 ) {
     public static MatchOutputDto fromEntity(com.myown.Final.Exam.model.Match match) {
         return new MatchOutputDto(
@@ -15,7 +19,11 @@ public record MatchOutputDto(
                 match.getHomeTeam().getName(),
                 match.getAwayTeam().getName(),
                 match.getMatchDate(),
-                match.getScore()
+                match.getHomeTeamScore(),
+                match.getAwayTeamScore(),
+                match.wentToPenalties(),
+                match.getHomePenaltyScore(),
+                match.getAwayPenaltyScore()
         );
     }
 }

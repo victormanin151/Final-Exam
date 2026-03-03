@@ -23,25 +23,37 @@ public class Match {
     @Column(name = "match_date")
     private LocalDate matchDate;
 
-    @Column(name = "match_score")
-    private String score;
+    @Column(name = "homeTeam_score")
+    private int homeTeamScore;
+
+    @Column(name = "awayTeam_score")
+    private int awayTeamScore;
+
+    @Column(name = "went_to_penalties")
+    private boolean wentToPenalties;
+
+    @Column(name = "home_penalty_score")
+    private Integer homePenaltyScore;
+
+    @Column(name = "away_penalty_score")
+    private Integer awayPenaltyScore;
 
     protected Match(){}
 
-    public Match(Long id, Team homeTeam, Team awayTeam, LocalDate matchDate, String score) {
+    public Match(Long id, Team homeTeam, Team awayTeam, LocalDate matchDate, Integer homeTeamScore, Integer awayTeamScore, boolean wentToPenalties, Integer homePenaltyScore, Integer awayPenaltyScore) {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchDate = matchDate;
-        this.score = score;
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
+        this.wentToPenalties = wentToPenalties;
+        this.homePenaltyScore = homePenaltyScore;
+        this.awayPenaltyScore = awayPenaltyScore;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getScore() {
-        return score;
     }
 
     public Team getAwayTeam() {
@@ -54,5 +66,25 @@ public class Match {
 
     public LocalDate getMatchDate() {
         return matchDate;
+    }
+
+    public int getHomeTeamScore() {
+        return homeTeamScore;
+    }
+
+    public int getAwayTeamScore() {
+        return awayTeamScore;
+    }
+
+    public boolean wentToPenalties() {
+        return wentToPenalties;
+    }
+
+    public Integer getHomePenaltyScore() {
+        return homePenaltyScore;
+    }
+
+    public Integer getAwayPenaltyScore() {
+        return awayPenaltyScore;
     }
 }

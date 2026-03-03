@@ -2,7 +2,7 @@ package com.myown.Final.Exam.dto;
 
 import com.myown.Final.Exam.model.Match;
 import com.myown.Final.Exam.model.Team;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
@@ -22,8 +22,20 @@ public record MatchInputDto(
         @PastOrPresent(message = "Date cannot be in the future")
         LocalDate date,
 
-        @NotBlank(message = "Score cannot be blank")
-        String score
+        @Min(value = 0, message = "Score must be 0 or greater")
+        int homeTeamScore,
+
+        @Min(value = 0, message = "Score must be 0 or greater")
+        int awayTeamScore,
+
+        //fix custom annotations later if time
+        boolean wentToPenalties,
+
+        @Min(value = 0, message = "Penalty score must be 0 or greater")
+        Integer homePenaltyScore,
+
+        @Min(value = 0, message = "Penalty score must be 0 or greater")
+        Integer awayPenaltyScore
 ) {
         public Match toEntity(Team homeTeam, Team awayTeam) {
                 return new Match(
@@ -31,7 +43,11 @@ public record MatchInputDto(
                         homeTeam,
                         awayTeam,
                         date,
-                        score
+                        homeTeamScore,
+                        awayTeamScore,
+                        wentToPenalties,
+                        homePenaltyScore,
+                        awayPenaltyScore
                 );
         }
 }
