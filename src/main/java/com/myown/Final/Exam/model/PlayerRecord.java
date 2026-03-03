@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "records")
-public class Record {
+public class PlayerRecord {
     @Id
     private Long id;
 
@@ -22,9 +22,9 @@ public class Record {
     @Column(nullable = false)
     private Integer toMinute;
 
-    protected Record(){}
+    protected PlayerRecord(){}
 
-    public Record(Long id, Player player, Match match, Integer fromMinute, Integer toMinute) {
+    public PlayerRecord(Long id, Player player, Match match, Integer fromMinute, Integer toMinute) {
         this.id = id;
         this.player = player;
         this.match = match;
