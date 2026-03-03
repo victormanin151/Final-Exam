@@ -37,6 +37,20 @@ public class MatchService {
             throw new IllegalArgumentException("Home and Away team cannot be the same");
         }
 
+        if (dto.wentToPenalties()) {
+            if (dto.homePenaltyScore() == null || dto.awayPenaltyScore() == null) {
+                throw new IllegalArgumentException(
+                        "Penalty scores must be provided when match went to penalties"
+                );
+            }
+        } else {
+            if (dto.homePenaltyScore() != null || dto.awayPenaltyScore() != null) {
+                throw new IllegalArgumentException(
+                        "Penalty scores must be null when match did not go to penalties"
+                );
+            }
+        }
+
         Match match = dto.toEntity(home, away);
 
         matchRepository.save(match);
