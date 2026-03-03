@@ -1,6 +1,7 @@
 package com.myown.Final.Exam.service;
 
 import com.myown.Final.Exam.dto.PlayerRecordInputDto;
+import com.myown.Final.Exam.dto.PlayerRecordOutputDto;
 import com.myown.Final.Exam.model.Match;
 import com.myown.Final.Exam.model.Player;
 import com.myown.Final.Exam.model.PlayerRecord;
@@ -9,6 +10,8 @@ import com.myown.Final.Exam.repository.PlayerRecordRepository;
 import com.myown.Final.Exam.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class PlayerRecordService {
@@ -41,5 +44,12 @@ public class PlayerRecordService {
         }
 
         playerRecordRepository.save(playerRecord);
+    }
+    @Transactional(readOnly = true)
+    public List<PlayerRecordOutputDto> getPlayerRecords(Long playerId) {
+        return playerRecordRepository.findByPlayerId(playerId)
+                .stream()
+                .map(PlayerRecordOutputDto::fromEntity)
+                .toList();
     }
 }
