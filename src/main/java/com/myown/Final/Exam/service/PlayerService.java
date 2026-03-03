@@ -22,6 +22,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
+    @Transactional
     public void createPlayer(PlayerInputDto dto) {
 
         Team team = teamRepository

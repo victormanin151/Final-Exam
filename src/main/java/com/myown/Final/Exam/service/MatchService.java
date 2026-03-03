@@ -23,6 +23,7 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
+    @Transactional
     public void createMatch(MatchInputDto dto) {
 
         Team home = teamRepository
