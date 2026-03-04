@@ -23,16 +23,19 @@ public class PlayerService {
     }
 
     @Transactional
-    public void createPlayer(PlayerInputDto dto) {
+    public void createPlayers(List<PlayerInputDto> dtos) {
+        for (PlayerInputDto dto : dtos) {
+            Team team = teamRepository
+                    .findById(dto.teamId())
+                    .orElseThrow(() -> new IllegalArgumentException("Team not found"));
 
-        Team team = teamRepository
-                .findById(dto.teamId())
-                .orElseThrow(() -> new IllegalArgumentException("Team not found"));
+            Player player = dto.toEntity(team);
 
-        Player player = dto.toEntity(team);
-
-        playerRepository.save(player);
+            playerRepository.save(player);
+        }
     }
+
+    //should try to safe-all if time
 
     @Transactional(readOnly = true)
     public List<PlayerOutputDto> getAllPlayers() {
