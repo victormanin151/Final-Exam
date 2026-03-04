@@ -16,9 +16,13 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public void createTeam(TeamDto dto) {
-        Team team = dto.toEntity();
-        teamRepository.save(team);
+    @Transactional
+    public void createTeams(List<TeamDto> dtos) {
+        List<Team> teams = dtos.stream()
+                .map(TeamDto::toEntity)
+                .toList();
+
+        teamRepository.saveAll(teams);
     }
 
     @Transactional(readOnly = true)
