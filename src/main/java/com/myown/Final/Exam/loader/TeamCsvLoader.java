@@ -3,6 +3,7 @@ package com.myown.Final.Exam.loader;
 import com.myown.Final.Exam.dto.TeamDto;
 import com.myown.Final.Exam.service.TeamService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
+@Order(1)
 public class TeamCsvLoader implements CommandLineRunner {
 
     private final TeamService teamService;
