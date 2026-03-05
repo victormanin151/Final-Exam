@@ -14,15 +14,15 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static com.myown.Final.Exam.loader.MatchCsvLoader.matchesThatWentToPenalties;
+
 @Component
 @Order(4)
 public class PlayerRecordCsvLoader implements CommandLineRunner {
     private final PlayerRecordService playerRecordService;
-    private final MatchService matchService;
 
-    public PlayerRecordCsvLoader (PlayerRecordService playerRecordService, MatchService matchService) {
+    public PlayerRecordCsvLoader (PlayerRecordService playerRecordService) {
         this.playerRecordService = playerRecordService;
-        this.matchService = matchService;
     }
 
     @Override
@@ -53,9 +53,12 @@ public class PlayerRecordCsvLoader implements CommandLineRunner {
                     Integer fromMinute = Integer.parseInt(cols[3].trim());
                     Integer toMinute;
                     if (cols[4].trim().equalsIgnoreCase("null")) {
-                        boolean wentToPenalties = matchService
-                                .getMatchWentToPenalties(matchId);
-                        toMinute = wentToPenalties ? 120 : 90;
+                        if(matchesThatWentToPenalties.contains(matchId))
+                        {
+                            toMinute = 120;
+                        }else{
+                            toMinute = 90;
+                        }
                     } else {
                         toMinute = Integer.parseInt(cols[4].trim());
                     }
