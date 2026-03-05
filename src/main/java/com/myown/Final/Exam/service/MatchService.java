@@ -24,37 +24,16 @@ public class MatchService {
     }
 
     @Transactional
-    public void createMatch(MatchInputDto dto) {
+    public void createMatches(List<MatchInputDto> dtos) {
+        List<Match> matches = dtos.stream().map(dto -> {
+            Team homeTeam = teamRepository.findById(dto.homeTeamId())
+                    .orElseThrow(() -> new IllegalArgumentException("Home team not found: "));
+            Team awayTeam = teamRepository.findById(dto.awayTeamId())
+                    .orElseThrow(() -> new IllegalArgumentException("Away team not found: "));
+            return dto.toEntity(homeTeam, awayTeam);
+        }).toList();
 
-        Team home = teamRepository
-                .findById(dto.homeTeamId())
-                .orElseThrow(() -> new IllegalArgumentException("Home team not found"));
-
-        Team away = teamRepository
-                .findById(dto.awayTeamId())
-                .orElseThrow(() -> new IllegalArgumentException("Away team not found"));
-
-        if (dto.homeTeamId().equals(dto.awayTeamId())) {
-            throw new IllegalArgumentException("Home and Away team cannot be the same");
-        }
-
-        if (dto.wentToPenalties()) {
-            if (dto.homePenaltyScore() == null || dto.awayPenaltyScore() == null) {
-                throw new IllegalArgumentException(
-                        "Penalty scores must be provided when match went to penalties"
-                );
-            }
-        } else {
-            if (dto.homePenaltyScore() != null || dto.awayPenaltyScore() != null) {
-                throw new IllegalArgumentException(
-                        "Penalty scores must be null when match did not go to penalties"
-                );
-            }
-        }
-
-        Match match = dto.toEntity(home, away);
-
-        matchRepository.save(match);
+        matchRepository.saveAll(matches);
     }
 
     @Transactional(readOnly = true)
