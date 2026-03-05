@@ -15,11 +15,15 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Order(3)
 public class MatchCsvLoader implements CommandLineRunner {
+    public static final Set<Long> matchesThatWentToPenalties = new HashSet<>();
+
     private final MatchService matchService;
 
     public MatchCsvLoader(MatchService matchService){
@@ -72,6 +76,7 @@ public class MatchCsvLoader implements CommandLineRunner {
 
                         homePenalty = Integer.parseInt(homeSide.substring(homeSide.indexOf('(') + 1, homeSide.indexOf(')')));
                         awayPenalty = Integer.parseInt(awaySide.substring(awaySide.indexOf('(') + 1, awaySide.indexOf(')')));
+                        matchesThatWentToPenalties.add(id);
                     } else {
                         String[] sides = scorePart.split("-");
                         homeScore = Integer.parseInt(sides[0]);
