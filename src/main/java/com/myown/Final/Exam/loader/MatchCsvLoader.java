@@ -1,8 +1,6 @@
 package com.myown.Final.Exam.loader;
 
-
 import com.myown.Final.Exam.dto.MatchInputDto;
-import com.myown.Final.Exam.dto.PlayerInputDto;
 import com.myown.Final.Exam.service.MatchService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -66,8 +64,8 @@ public class MatchCsvLoader implements CommandLineRunner {
                     Integer homePenalty = null;
                     Integer awayPenalty = null;
 
+                    String[] sides = scorePart.split("-");
                     if (wentToPenalties) {
-                        String[] sides = scorePart.split("-");
                         String homeSide = sides[0];
                         String awaySide = sides[1];
 
@@ -78,7 +76,6 @@ public class MatchCsvLoader implements CommandLineRunner {
                         awayPenalty = Integer.parseInt(awaySide.substring(awaySide.indexOf('(') + 1, awaySide.indexOf(')')));
                         matchesThatWentToPenalties.add(id);
                     } else {
-                        String[] sides = scorePart.split("-");
                         homeScore = Integer.parseInt(sides[0]);
                         awayScore = Integer.parseInt(sides[1]);
                     }

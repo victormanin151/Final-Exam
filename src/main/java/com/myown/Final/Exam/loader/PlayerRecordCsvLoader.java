@@ -1,7 +1,6 @@
 package com.myown.Final.Exam.loader;
 
 import com.myown.Final.Exam.dto.PlayerRecordInputDto;
-import com.myown.Final.Exam.service.MatchService;
 import com.myown.Final.Exam.service.PlayerRecordService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
