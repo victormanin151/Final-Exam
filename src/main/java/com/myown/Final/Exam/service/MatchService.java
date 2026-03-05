@@ -43,4 +43,10 @@ public class MatchService {
                 .map(MatchOutputDto::fromEntity)
                 .toList();
     }
+
+    public boolean getMatchWentToPenalties(Long matchId) {
+        return matchRepository.findById(matchId)
+                .map(Match::wentToPenalties)
+                .orElse(false);
+    }
 }
