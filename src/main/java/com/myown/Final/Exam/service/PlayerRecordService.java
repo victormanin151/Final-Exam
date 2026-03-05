@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerRecordService {
@@ -29,22 +30,25 @@ public class PlayerRecordService {
     }
 
     @Transactional
-    public void createPlayerRecord(PlayerRecordInputDto dto) {
+    public void createPlayerRecord(List<PlayerRecordInputDto> dtos) {
+        List<PlayerRecord> playerRecords = dtos.stream().map(dto -> {
+            Player player = playerRepository.findById(dto.playerId())
+                    .orElseThrow(() -> new IllegalArgumentException("Player not found: "));
 
-        Player player = playerRepository.findById(dto.playerId())
-                .orElseThrow(() -> new IllegalArgumentException("Player not found"));
+            Match match = matchRepository.findById(dto.matchId())
+                    .orElseThrow(() -> new IllegalArgumentException("Match not found: "));
 
-        Match match = matchRepository.findById(dto.matchId())
-                .orElseThrow(() -> new IllegalArgumentException("Match not found"));
+            if (dto.toMinute() < dto.fromMinute()) {
+                throw new IllegalArgumentException(
+                        "toMinute cannot be less than fromMinute");
+            }
 
-        PlayerRecord playerRecord = dto.toEntity(player, match);
+            return dto.toEntity(player, match);
+        }).collect(Collectors.toList());
 
-        if (dto.toMinute() < dto.fromMinute()) {
-            throw new IllegalArgumentException("toMinute cannot be less than fromMinute");
-        }
-
-        playerRecordRepository.save(playerRecord);
+        playerRecordRepository.saveAll(playerRecords);
     }
+
     @Transactional(readOnly = true)
     public List<PlayerRecordOutputDto> getPlayerRecords(Long playerId) {
         return playerRecordRepository.findByPlayerId(playerId)
