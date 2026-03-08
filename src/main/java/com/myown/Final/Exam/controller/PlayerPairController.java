@@ -4,7 +4,10 @@ import com.myown.Final.Exam.dto.PairMinutesDto;
 import com.myown.Final.Exam.service.PlayerPairService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pairs")
@@ -17,9 +20,9 @@ public class PlayerPairController {
     }
 
     @GetMapping("/same-team/longest")
-    public PairMinutesDto getLongestSameTeamPair() {
+    public List<PairMinutesDto> getLongestSameTeamPair(@RequestParam (name="limit") Integer limit) {
         playerPairService.calculatePairs();
-        return playerPairService.getLongestSameTeamPair();
+        return playerPairService.getLongestSameTeamPair(limit);
     }
 
     @GetMapping("/different-team/longest")
