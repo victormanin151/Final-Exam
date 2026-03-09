@@ -34,6 +34,18 @@ public class MatchCsvLoader implements CommandLineRunner {
         load();
     }
 
+    private LocalDate parseDate(String dateStr) {
+        String[] patterns = { "M/d/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", "d-M-yyyy" };
+        for (String pattern : patterns) {
+            try {
+                return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            } catch (Exception ignored) {
+            }
+        }
+        throw new IllegalArgumentException("Date format not supported: " +
+                "Supported are \"M/d/yyyy\", \"MM/dd/yyyy\", \"yyyy-MM-dd\", \"d-M-yyyy\"" + dateStr);
+    }
+
     public void load() throws IOException {
         InputStream inputStream = getClass()
                 .getClassLoader()
@@ -54,7 +66,7 @@ public class MatchCsvLoader implements CommandLineRunner {
                     Long id = Long.parseLong(cols[0].trim());
                     Long homeTeamId = Long.parseLong(cols[1].trim());
                     Long awayTeamId = Long.parseLong(cols[2].trim());
-                    LocalDate date = LocalDate.parse(cols[3].trim(), DateTimeFormatter.ofPattern("M/d/yyyy"));
+                    LocalDate date = parseDate(cols[3].trim());
 
                     String scorePart = cols[4].trim();
                     boolean wentToPenalties = scorePart.contains("(");
