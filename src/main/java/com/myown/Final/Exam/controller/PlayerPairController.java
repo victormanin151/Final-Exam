@@ -22,7 +22,13 @@ public class PlayerPairController {
     @GetMapping("/same-team/longest")
     public List<PairMinutesDto> getLongestSameTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
         playerPairService.calculatePairs();
-        return playerPairService.getLongestSameTeamPair(limit);
+        return playerPairService.getSameTeamPair(limit, true);
+    }
+
+    @GetMapping("/same-team/least")
+    public List<PairMinutesDto> getLeastSameTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
+        playerPairService.calculatePairs();
+        return playerPairService.getSameTeamPair(limit, false);
     }
 
     @GetMapping("/different-team/longest")

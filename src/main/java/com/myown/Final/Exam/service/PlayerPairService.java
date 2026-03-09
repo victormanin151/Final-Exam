@@ -76,14 +76,23 @@ public class PlayerPairService {
 //        );
 //    }
 
-    public List<PairMinutesDto> getLongestSameTeamPair(Integer limit) {
+    public List<PairMinutesDto> getSameTeamPair(Integer limit, boolean descending) {
         if(limit == null){
             limit = 1;
         }
+
+        Comparator<Map.Entry<PlayerPair, Integer>> comparator =
+                Map.Entry.comparingByValue();
+
+        if (descending) {
+            comparator = comparator.reversed();
+        }
+
         var entry = sameTeamMinutes.entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .limit(limit).toList();
+                .sorted(comparator)
+                .limit(limit)
+                .toList();
 
         return entry.stream()
                 .map(e ->
