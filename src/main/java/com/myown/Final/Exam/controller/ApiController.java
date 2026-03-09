@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
-    private static final List<String> ENDPOINTS = List.of("players", "playerRecords", "matches", "teams");
+    private static final List<String> ENDPOINTS = List.of("players", "matches", "teams");
 
     @Value("${spring.application.name}")
     private String appName;
