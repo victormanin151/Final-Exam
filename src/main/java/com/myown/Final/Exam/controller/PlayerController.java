@@ -3,9 +3,7 @@ package com.myown.Final.Exam.controller;
 
 import com.myown.Final.Exam.dto.PlayerOutputDto;
 import com.myown.Final.Exam.service.PlayerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,16 @@ public class PlayerController {
     @GetMapping()
     public List<PlayerOutputDto> getAllPlayers(){
         return playerService.getAllPlayers();
+    }
+
+    @GetMapping("/{id}")
+    public PlayerOutputDto getPlayerById(@PathVariable Long id){
+        return playerService.getPlayerById(id);
+    }
+
+    @GetMapping("/search")
+    public List<PlayerOutputDto> searchPlayers(@RequestParam String name) {
+        return playerService.searchPlayersByName(name);
     }
 
 }
