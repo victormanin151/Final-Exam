@@ -64,19 +64,17 @@ public class PlayerPairService {
         }
     }
 
-//    public PairMinutesDto getLongestSameTeamPair() {
-//        var entry = sameTeamMinutes.entrySet()
-//                .stream()
-//                .max(Map.Entry.comparingByValue())
-//                .get();
-//
-//        return new PairMinutesDto(
-//                new ArrayList<>(entry.getKey().playerIds()),
-//                entry.getValue()
-//        );
-//    }
+    public Map<PlayerPair, Integer> getSameTeamMinutes() {
+        return sameTeamMinutes;
+    }
 
-    public List<PairMinutesDto> getSameTeamPair(Integer limit, boolean descending) {
+    public Map<PlayerPair, Integer> getDifferentTeamMinutes() {
+        return differentTeamMinutes;
+    }
+
+    public List<PairMinutesDto> getPairs(Map<PlayerPair, Integer> minutesMap,
+                                         Integer limit,
+                                         boolean descending) {
         if(limit == null){
             limit = 1;
         }
@@ -88,30 +86,28 @@ public class PlayerPairService {
             comparator = comparator.reversed();
         }
 
-        var entry = sameTeamMinutes.entrySet()
+        return minutesMap.entrySet()
                 .stream()
                 .sorted(comparator)
                 .limit(limit)
-                .toList();
-
-        return entry.stream()
-                .map(e ->
-                        new PairMinutesDto(e.getKey().playerIds().stream().toList(),e.getValue()))
+                .map(e -> new PairMinutesDto(
+                        e.getKey().playerIds().stream().toList(),
+                        e.getValue()))
                 .toList();
     }
 
-    public List<PairMinutesDto> getLongestDifferentTeamPair(Integer limit) {
-        if(limit == null){
-            limit = 1;
-        }
-        var entry = differentTeamMinutes.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .limit(limit).toList();
-
-        return entry.stream()
-                .map(e ->
-                        new PairMinutesDto(e.getKey().playerIds().stream().toList(),e.getValue()))
-                .toList();
-    }
+//    public List<PairMinutesDto> getLongestDifferentTeamPair(Integer limit) {
+//        if(limit == null){
+//            limit = 1;
+//        }
+//        var entry = differentTeamMinutes.entrySet()
+//                .stream()
+//                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+//                .limit(limit).toList();
+//
+//        return entry.stream()
+//                .map(e ->
+//                        new PairMinutesDto(e.getKey().playerIds().stream().toList(),e.getValue()))
+//                .toList();
+//    }
 }
