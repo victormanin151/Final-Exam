@@ -40,4 +40,11 @@ public class TeamService {
                 .orElseThrow(() -> new RuntimeException("Team not found"));
     }
 
+    @Transactional(readOnly = true)
+    public List<TeamDto> getTeamsByCountryName(String name) {
+        return teamRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(TeamDto::fromEntity)
+                .toList();
+    }
 }
