@@ -44,9 +44,18 @@ public class MatchService {
                 .toList();
     }
 
-    public boolean getMatchWentToPenalties(Long matchId) {
+    @Transactional(readOnly = true)
+    public MatchOutputDto getMatchById(Long matchId) {
         return matchRepository.findById(matchId)
-                .map(Match::wentToPenalties)
-                .orElse(false);
+                .map(MatchOutputDto::fromEntity)
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<MatchOutputDto> getMatchesThatWentToPenalties() {
+        return matchRepository.findByWentToPenaltiesTrue()
+                .stream()
+                .map(MatchOutputDto::fromEntity)
+                .toList();
     }
 }
