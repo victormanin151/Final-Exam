@@ -2,10 +2,7 @@ package com.myown.Final.Exam.controller;
 
 import com.myown.Final.Exam.dto.TeamDto;
 import com.myown.Final.Exam.service.TeamService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,11 @@ public class TeamController {
     @GetMapping("/{id}")
     public TeamDto getTeamById(@PathVariable Long id){
         return teamService.getTeamById(id);
+    }
+
+    @GetMapping("/country")
+    public List<TeamDto> getTeamsByCountry(@RequestParam String name){
+        return teamService.getTeamsByCountryName(name);
     }
 
 }
