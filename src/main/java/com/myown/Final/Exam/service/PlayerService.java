@@ -45,4 +45,20 @@ public class PlayerService {
                 .map(PlayerOutputDto::fromEntity)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public PlayerOutputDto getPlayerById(Long id) {
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("No player with that ID"));
+        return PlayerOutputDto.fromEntity(player);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlayerOutputDto> searchPlayersByName(String name) {
+        return playerRepository.findByFullNameContainingIgnoreCase(name)
+                .stream()
+                .map(PlayerOutputDto::fromEntity)
+                .toList();
+    }
+
 }
