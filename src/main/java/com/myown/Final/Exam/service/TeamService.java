@@ -47,4 +47,12 @@ public class TeamService {
                 .map(TeamDto::fromEntity)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<TeamDto> getTeamsByGroup(String group) {
+        return teamRepository.findByTeamGroup(group)
+                .stream()
+                .map(TeamDto::fromEntity)
+                .toList();
+    }
 }

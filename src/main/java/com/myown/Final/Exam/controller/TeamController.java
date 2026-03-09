@@ -30,4 +30,9 @@ public class TeamController {
         return teamService.getTeamsByCountryName(name);
     }
 
+    @GetMapping("/group")
+    public List<TeamDto> getTeamsByGroup(@RequestParam String letter){
+        return teamService.getTeamsByGroup(letter);
+    }
+
 }
