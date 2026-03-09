@@ -21,17 +21,6 @@ public class PlayerPairController {
         this.playerPairService = playerPairService;
     }
 
-//    @GetMapping("/same-team/longest")
-//    public List<PairMinutesDto> getLongestSameTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
-//        playerPairService.calculatePairs();
-//        return playerPairService.getSameTeamPair(limit, true);
-//    }
-//
-//    @GetMapping("/same-team/least")
-//    public List<PairMinutesDto> getLeastSameTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
-//        playerPairService.calculatePairs();
-//        return playerPairService.getSameTeamPair(limit, false);
-//    }
     @GetMapping("")
     public List<PairMinutesDto> getPairs(
             @RequestParam(defaultValue = "same") String teamType,
@@ -52,9 +41,3 @@ public class PlayerPairController {
         return playerPairService.getPairs(theMap, limit, descending);
     }
 }
-//    @GetMapping("/different-team/longest")
-//    public List<PairMinutesDto> getLongestDifferentTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
-//        playerPairService.calculatePairs();
-//        return playerPairService.getLongestDifferentTeamPair(limit);
-//    }
-//}

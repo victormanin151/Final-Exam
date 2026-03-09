@@ -52,7 +52,6 @@ public class PlayerRecordCsvLoader implements CommandLineRunner {
                     Integer fromMinute = Integer.parseInt(cols[3].trim());
                     Integer toMinute;
                     if (cols[4].trim().equalsIgnoreCase("null")) {
-                   // if ("null".equals(cols[4].trim().toLowerCase())) {
                         if(matchesThatWentToPenalties.contains(matchId)) {
                             toMinute = 120;
                         } else{

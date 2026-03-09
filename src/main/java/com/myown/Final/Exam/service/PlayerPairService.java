@@ -95,19 +95,4 @@ public class PlayerPairService {
                         e.getValue()))
                 .toList();
     }
-
-//    public List<PairMinutesDto> getLongestDifferentTeamPair(Integer limit) {
-//        if(limit == null){
-//            limit = 1;
-//        }
-//        var entry = differentTeamMinutes.entrySet()
-//                .stream()
-//                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-//                .limit(limit).toList();
-//
-//        return entry.stream()
-//                .map(e ->
-//                        new PairMinutesDto(e.getKey().playerIds().stream().toList(),e.getValue()))
-//                .toList();
-//    }
 }
