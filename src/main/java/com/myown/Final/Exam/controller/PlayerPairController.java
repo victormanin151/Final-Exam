@@ -20,14 +20,14 @@ public class PlayerPairController {
     }
 
     @GetMapping("/same-team/longest")
-    public List<PairMinutesDto> getLongestSameTeamPair(@RequestParam (name="limit") Integer limit) {
+    public List<PairMinutesDto> getLongestSameTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
         playerPairService.calculatePairs();
         return playerPairService.getLongestSameTeamPair(limit);
     }
 
     @GetMapping("/different-team/longest")
-    public PairMinutesDto getLongestDifferentTeamPair() {
+    public List<PairMinutesDto> getLongestDifferentTeamPair(@RequestParam (name="limit", required = false) Integer limit) {
         playerPairService.calculatePairs();
-        return playerPairService.getLongestDifferentTeamPair();
+        return playerPairService.getLongestDifferentTeamPair(limit);
     }
 }

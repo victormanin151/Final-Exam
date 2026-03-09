@@ -29,6 +29,10 @@ public class PlayerPairService {
             return;
         }
 
+        if(!differentTeamMinutes.isEmpty()){
+            return;
+        }
+
         for (int i = 0; i < records.size(); i++) {
             PlayerRecord r1 = records.get(i);
 
@@ -78,7 +82,7 @@ public class PlayerPairService {
         }
         var entry = sameTeamMinutes.entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue())
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(limit).toList();
 
         return entry.stream()
@@ -87,15 +91,18 @@ public class PlayerPairService {
                 .toList();
     }
 
-    public PairMinutesDto getLongestDifferentTeamPair() {
+    public List<PairMinutesDto> getLongestDifferentTeamPair(Integer limit) {
+        if(limit == null){
+            limit = 1;
+        }
         var entry = differentTeamMinutes.entrySet()
                 .stream()
-                .max(Map.Entry.comparingByValue())
-                .get();
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(limit).toList();
 
-        return new PairMinutesDto(
-                new ArrayList<>(entry.getKey().playerIds()),
-                entry.getValue()
-        );
+        return entry.stream()
+                .map(e ->
+                        new PairMinutesDto(e.getKey().playerIds().stream().toList(),e.getValue()))
+                .toList();
     }
 }
