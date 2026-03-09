@@ -3,6 +3,7 @@ package com.myown.Final.Exam.controller;
 import com.myown.Final.Exam.dto.TeamDto;
 import com.myown.Final.Exam.service.TeamService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,11 @@ public class TeamController {
     @GetMapping
     public List<TeamDto> getAllTeams(){
         return teamService.getAllTeams();
+    }
+
+    @GetMapping("/{id}")
+    public TeamDto getTeamById(@PathVariable Long id){
+        return teamService.getTeamById(id);
     }
 
 }
