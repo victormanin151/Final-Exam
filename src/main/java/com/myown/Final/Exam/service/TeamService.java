@@ -32,4 +32,12 @@ public class TeamService {
                 .map(TeamDto::fromEntity)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public TeamDto getTeamById(Long id) {
+        return teamRepository.findById(id)
+                .map(TeamDto::fromEntity)
+                .orElseThrow(() -> new RuntimeException("Team not found"));
+    }
+
 }
